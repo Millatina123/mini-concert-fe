@@ -5,6 +5,7 @@ import store from "@/redux/store";
 import { Provider } from "react-redux";
 import Providers from "@/providers";
 import { Toaster } from "react-hot-toast";
+import { ConfigProvider } from "antd";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -15,13 +16,27 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          {" "}
-          <Toaster position="top-right" />
-          {children}
-        </Providers>
-      </body>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#B77BFF",
+          },
+          components: {
+            Typography: {
+              margin: 0,
+              padding: 0,
+            },
+          },
+        }}
+      >
+        <body className={inter.className}>
+          <Providers>
+            {" "}
+            <Toaster position="top-right" />
+            {children}
+          </Providers>
+        </body>
+      </ConfigProvider>
     </html>
   );
 }

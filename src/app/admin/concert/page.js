@@ -72,16 +72,6 @@ const ConcertPage = () => {
       dataIndex: "description",
       key: "description",
     },
-    {
-      title: "YouTube Link",
-      dataIndex: "link_yt",
-      key: "link_yt",
-      render: (text) => (
-        <a href={`https://${text}`} target="_blank" rel="noopener noreferrer">
-          {text}
-        </a>
-      ),
-    },
   ];
 
   return (

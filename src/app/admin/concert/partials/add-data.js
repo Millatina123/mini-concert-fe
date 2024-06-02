@@ -35,6 +35,7 @@ const ConcertForm = ({ form }) => {
           <p className="ant-upload-hint">Support for a single or bulk upload.</p>
         </Dragger>
       </Form.Item>
+
       <Form.Item label="Start Date" name="start_date" rules={[{ required: true, message: "Please input the start date!" }]}>
         <DatePicker format="DD-MM-YYYY" />
       </Form.Item>

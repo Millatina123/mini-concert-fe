@@ -1,13 +1,13 @@
 "use client";
-import { useCreatePaymentMutation, useListConcertQuery } from "@/redux/services/payment";
+import { useCreatePaymentMutation, useListConcertQuery, useListTicketCustomerQuery } from "@/redux/services/payment";
 import { Button, Card, Divider, Form, Modal } from "antd";
 import Title from "antd/es/typography/Title";
+import moment from "moment";
 
 import React, { useState } from "react";
-import PaymentForm from "./partials/payment-form";
 
-export default function CustomerPage() {
-  const { data: { payload: { data: concerts } = {} } = {}, isLoading } = useListConcertQuery();
+export default function ListTicketCustomer() {
+  const { data: { payload: { data: concerts } = {} } = {}, isLoading } = useListTicketCustomerQuery();
   const [visible, setVisible] = useState(false);
   const [selectedConcert, setSelelectedConcert] = useState(false);
   const [form] = Form.useForm();
@@ -31,9 +31,10 @@ export default function CustomerPage() {
   const handleCancel = () => {
     setVisible(false);
   };
+
   return (
     <>
-      <Title level={3}>Available Concerts</Title>
+      <Title level={3}>My Ticket</Title>
       <div className="mt-4 grid gap-x-5 grid-cols-4 gap-y-6">
         {concerts &&
           concerts.map((concert) => (
@@ -53,19 +54,17 @@ export default function CustomerPage() {
                 <Divider style={{ marginTop: "8px", marginBottom: "0px" }} />
                 {/* Apply margin: 0 to remove margin */}
                 <p style={{ marginTop: "4px" }}>{concert.description}</p> {/* Apply margin: 0 to remove margin */}
-                {concert && concert.payments.length > 0 ? (
-                  concert?.payments[0].verified ? (
-                    <Button type="primary" style={{ marginTop: "16px" }} disabled>
-                      Ticket Already Purchased
-                    </Button>
-                  ) : (
-                    <Button type="primary" style={{ marginTop: "16px" }} disabled>
-                      Waiting Verification
-                    </Button>
-                  )
+                <Divider style={{ marginTop: "8px", marginBottom: "0px" }} />
+                <p style={{ marginTop: "4px" }}>
+                  Start at: {moment(concert.start_date, "DD-MM-YYYY").format("DD MMMM YYYY")} {concert.start_hours}
+                </p>
+                {concert.is_start ? (
+                  <Button type="primary" style={{ marginTop: "16px" }}>
+                    Watch Concert
+                  </Button>
                 ) : (
-                  <Button type="primary" style={{ marginTop: "16px" }} onClick={() => showModal(concert)}>
-                    Purchase Ticket
+                  <Button type="primary" style={{ marginTop: "16px" }} disabled>
+                    Start Soon
                   </Button>
                 )}
                 {/* Add margin-top to create space between button and description */}
@@ -73,22 +72,6 @@ export default function CustomerPage() {
             </Card>
           ))}
       </div>
-      <Modal
-        title="Confirm your payment"
-        visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel Payment
-          </Button>,
-          <Button key="confirm" type="primary" onClick={handleOk}>
-            Confirm Payment
-          </Button>,
-        ]}
-      >
-        <PaymentForm data={selectedConcert} form={form} />
-      </Modal>
     </>
   );
 }
