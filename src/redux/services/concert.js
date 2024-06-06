@@ -23,7 +23,15 @@ export const concertApi = createApi({
       }),
       invalidatesTags: ["Concert"],
     }),
+    concert: builder.query({
+      providesTags: ["Concert"],
+      query: (code) => ({
+        url: "/concerts/" + code,
+        method: "get",
+        headers: { Authorization: "Bearer " + localStorage.getItem("authToken") },
+      }),
+    }),
   }),
 });
 
-export const { useListConcertQuery, useAddConcertMutation } = concertApi;
+export const { useListConcertQuery, useAddConcertMutation, useConcertQuery } = concertApi;

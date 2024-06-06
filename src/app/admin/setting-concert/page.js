@@ -1,7 +1,8 @@
 "use client";
 import { useCreatePaymentMutation, useListConcertQuery, useListTicketCustomerQuery } from "@/redux/services/payment";
-import { useListSettingConcertQuery } from "@/redux/services/settingConcert";
+import { useListSettingConcertQuery, useUpdateLinkYtConcertMutation } from "@/redux/services/settingConcert";
 import { Button, Card, Descriptions, Divider, Form, Modal } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import Title from "antd/es/typography/Title";
 import moment from "moment";
 
@@ -12,7 +13,7 @@ export default function SettingConcert() {
   const [visible, setVisible] = useState(false);
   const [selectedConcert, setSelelectedConcert] = useState(false);
   const [form] = Form.useForm();
-  const [createPayment] = useCreatePaymentMutation();
+  const [updateLinkYt] = useUpdateLinkYtConcertMutation();
 
   const showModal = (data) => {
     setSelelectedConcert(data);
@@ -21,7 +22,11 @@ export default function SettingConcert() {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      await createPayment(values).unwrap();
+      var data = {
+        id: selectedConcert.id,
+        link_yt: values.link_yt,
+      };
+      await updateLinkYt(data).unwrap();
       setVisible(false);
       form.resetFields();
     } catch (error) {
@@ -65,7 +70,7 @@ export default function SettingConcert() {
                     Stop Concert
                   </Button>
                 ) : (
-                  <Button type="primary" style={{ marginTop: "16px" }}>
+                  <Button type="primary" onClick={() => showModal(concert)} style={{ marginTop: "16px" }}>
                     Start Concert
                   </Button>
                 )}
@@ -74,6 +79,13 @@ export default function SettingConcert() {
             </Card>
           ))}
       </div>
+      <Modal title="Setting Concert " visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <Form form={form} layout="vertical">
+          <Form.Item label="Embed Youtube" name="link_yt" rules={[{ required: true, message: "Please input the description!" }]}>
+            <TextArea rows={4} />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 }

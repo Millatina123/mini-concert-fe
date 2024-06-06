@@ -3,6 +3,7 @@ import { useCreatePaymentMutation, useListConcertQuery, useListTicketCustomerQue
 import { Button, Card, Divider, Form, Modal } from "antd";
 import Title from "antd/es/typography/Title";
 import moment from "moment";
+import Link from "next/link";
 
 import React, { useState } from "react";
 
@@ -59,9 +60,11 @@ export default function ListTicketCustomer() {
                   Start at: {moment(concert.start_date, "DD-MM-YYYY").format("DD MMMM YYYY")} {concert.start_hours}
                 </p>
                 {concert.is_start ? (
-                  <Button type="primary" style={{ marginTop: "16px" }}>
-                    Watch Concert
-                  </Button>
+                  <Link href={"/customer/my-ticket/" + concert.code}>
+                    <Button type="primary" style={{ marginTop: "16px" }}>
+                      Watch Concert
+                    </Button>{" "}
+                  </Link>
                 ) : (
                   <Button type="primary" style={{ marginTop: "16px" }} disabled>
                     Start Soon

@@ -14,7 +14,21 @@ export const settingConcertApi = createApi({
         headers: { Authorization: "Bearer " + localStorage.getItem("authToken") },
       }),
     }),
+    updateLinkYtConcert: builder.mutation({
+      query: (data) => ({
+        url: `/setting-concerts/update-link-yt/${data.id}`,
+        method: "PUT",
+        body: {
+          link_yt: data.link_yt,
+        },
+        headers: {
+          Authorization: "bearer " + localStorage.getItem("authToken"),
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Concert"],
+    }),
   }),
 });
 
-export const { useListSettingConcertQuery } = settingConcertApi;
+export const { useListSettingConcertQuery, useUpdateLinkYtConcertMutation } = settingConcertApi;
