@@ -10,7 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { resetApiState } from "@/redux/store";
 
-const App = ({ children }) => {
+const AdminLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState(["admin"]); // Default selected key
   const {
@@ -205,4 +205,4 @@ const App = ({ children }) => {
     </Layout>
   );
 };
-export default App;
+export default AdminLayout;

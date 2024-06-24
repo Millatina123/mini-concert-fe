@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import store from "@/redux/store";
 import { Provider } from "react-redux";
@@ -19,11 +19,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/logo_conve.PNG" sizes="any" />
-      </Head>
       <ConfigProvider
         theme={{
           token: {
@@ -39,11 +34,7 @@ export default function RootLayout({ children }) {
       >
         <body className={inter.className}>
           <Providers>
-            <Toaster position="top-right" />
-            <Navbar />
             <div>{children}</div>
-            <Footer />
-            <PopupWidget />
           </Providers>
         </body>
       </ConfigProvider>
