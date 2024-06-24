@@ -6,8 +6,9 @@ import { Provider } from "react-redux";
 import Providers from "@/providers";
 import { Toaster } from "react-hot-toast";
 import { ConfigProvider } from "antd";
-import Head from "next/head";
-
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { PopupWidget } from "@/components/PopupWidget";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -39,7 +40,10 @@ export default function RootLayout({ children }) {
         <body className={inter.className}>
           <Providers>
             <Toaster position="top-right" />
-            {children}
+            <Navbar />
+            <div>{children}</div>
+            <Footer />
+            <PopupWidget />
           </Providers>
         </body>
       </ConfigProvider>
