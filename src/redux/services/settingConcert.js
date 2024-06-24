@@ -28,7 +28,21 @@ export const settingConcertApi = createApi({
       }),
       invalidatesTags: ["Concert"],
     }),
+    stopConcert: builder.mutation({
+      query: (data) => ({
+        url: `/setting-concerts/stop-concert/${data.id}`,
+        method: "PUT",
+        body: {
+          link_yt: data.link_yt,
+        },
+        headers: {
+          Authorization: "bearer " + localStorage.getItem("authToken"),
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Concert"],
+    }),
   }),
 });
 
-export const { useListSettingConcertQuery, useUpdateLinkYtConcertMutation } = settingConcertApi;
+export const { useListSettingConcertQuery, useUpdateLinkYtConcertMutation, useStopConcertMutation } = settingConcertApi;

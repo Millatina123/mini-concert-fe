@@ -30,6 +30,14 @@ export const paymentApi = createApi({
         headers: { Authorization: "Bearer " + localStorage.getItem("authToken") },
       }),
     }),
+    historyPayment: builder.query({
+      providesTags: ["HistoryPayment"],
+      query: () => ({
+        url: "/user/payment/history-payment",
+        method: "get",
+        headers: { Authorization: "Bearer " + localStorage.getItem("authToken") },
+      }),
+    }),
     createPayment: builder.mutation({
       query: (data) => ({
         url: "/user/payment",
@@ -50,4 +58,4 @@ export const paymentApi = createApi({
   }),
 });
 
-export const { useListConcertQuery, useCreatePaymentMutation, useListVerifyPaymentsQuery, useVerifyPaymentMutation, useListTicketCustomerQuery } = paymentApi;
+export const { useListConcertQuery, useCreatePaymentMutation, useHistoryPaymentQuery, useListVerifyPaymentsQuery, useVerifyPaymentMutation, useListTicketCustomerQuery } = paymentApi;

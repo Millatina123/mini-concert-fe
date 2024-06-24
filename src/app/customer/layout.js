@@ -55,7 +55,7 @@ const App = ({ children }) => {
     >
       <Sider theme="light" collapsed={collapsed} width={300} onCollapse={(value) => setCollapsed(value)} style={siderStyle} className="py-4 px-2">
         <div className="demo-logo-vertical" style={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-          <img src={"https://aqbgvzzymp.cloudimg.io/v7/barokahabadi.co.id/wp-content/uploads/2020/11/dummy-logo-1b.png"} alt="Logo" className="w-1/2 h-auto " /> {/* Logo */}
+          <img src={"/logo_conve.PNG"} alt="Logo" className="w-1/2 h-auto " /> {/* Logo */}
         </div>
         <Menu
           theme="light"
@@ -94,6 +94,21 @@ const App = ({ children }) => {
             style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("my-ticket") ? activeItemStyle : {}) }}
           >
             <Link href="/customer/my-ticket">My Ticket</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="history-concert"
+            icon={
+              <HomeOutlined
+                style={{
+                  fontSize: "18",
+                  strokeWidth: "25", // higher value === more thickness the filled area
+                  stroke: "white",
+                }}
+              />
+            }
+            style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("history-concert") ? activeItemStyle : {}) }}
+          >
+            <Link href="/customer/history">History Concert</Link>
           </Menu.Item>
         </Menu>
       </Sider>

@@ -37,7 +37,7 @@ const SignIn = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <img src={"https://aqbgvzzymp.cloudimg.io/v7/barokahabadi.co.id/wp-content/uploads/2020/11/dummy-logo-1b.png"} alt="Logo" className="w-56 h-auto mb-8" /> {/* Logo */}
+      <img src={"/logo_conve.PNG"} alt="Logo" className="w-32 h-auto mb-8" /> {/* Logo */}
       <Card className="w-full max-w-md p-4 ">
         <Title level={3}>Welcome in mini concert!</Title>
         <Paragraph>Sign in to continue</Paragraph>

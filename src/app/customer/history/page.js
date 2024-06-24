@@ -1,33 +1,38 @@
 "use client";
+import { useListHistoryConcertCustomerQuery, useUpdateReviewRatingMutation } from "@/redux/services/historyTicketCustomer";
 import { useCreatePaymentMutation, useListConcertQuery, useListTicketCustomerQuery } from "@/redux/services/payment";
-import { useListSettingConcertQuery, useStopConcertMutation, useUpdateLinkYtConcertMutation } from "@/redux/services/settingConcert";
-import { Button, Card, Descriptions, Divider, Form, Modal } from "antd";
+import { Button, Card, Divider, Form, Modal, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Title from "antd/es/typography/Title";
 import moment from "moment";
+import Link from "next/link";
 
 import React, { useState } from "react";
 
-export default function SettingConcert() {
-  const { data: { payload: { data: concerts } = {} } = {}, isLoading } = useListSettingConcertQuery();
+export default function HistoryConcertCustomer() {
+  const { data: { payload: { data: concerts } = {} } = {}, isLoading } = useListHistoryConcertCustomerQuery();
   const [visible, setVisible] = useState(false);
-  const [selectedConcert, setSelelectedConcert] = useState(false);
+  const [selectedPaymentId, setSelectedPaymentId] = useState(false);
   const [form] = Form.useForm();
-  const [updateLinkYt] = useUpdateLinkYtConcertMutation();
-  const [stopConcert] = useStopConcertMutation();
+  const [updateReviewRating] = useUpdateReviewRatingMutation();
+  const [rating, setRating] = useState(0);
 
+  const onChangeRating = (value) => {
+    setRating(value);
+  };
   const showModal = (data) => {
-    setSelelectedConcert(data);
+    setSelectedPaymentId(data);
     setVisible(true);
   };
   const handleOk = async () => {
     try {
-      const values = await form.validateFields();
       var data = {
-        id: selectedConcert.id,
-        link_yt: values.link_yt,
+        id: selectedPaymentId,
+        rating: rating,
+        review: form.getFieldValue("review"),
       };
-      await updateLinkYt(data).unwrap();
+
+      await updateReviewRating(data).unwrap();
       setVisible(false);
       form.resetFields();
     } catch (error) {
@@ -35,25 +40,13 @@ export default function SettingConcert() {
     }
   };
 
-  const onClickStopConcert = async (concert) => {
-    try {
-      const values = await form.validateFields();
-      var data = {
-        id: concert.id,
-      };
-      await stopConcert(data).unwrap();
-    } catch (error) {
-      console.error("Failed to create concert:", error);
-    }
-  };
   const handleCancel = () => {
     setVisible(false);
   };
 
   return (
     <>
-      <Title level={3}>Setting Concert</Title>
-      <p className="text-black">Concert arrangements can only be done if the concert date is equal to today's date </p>
+      <Title level={3}>History Conert</Title>
       <div className="mt-4 grid gap-x-5 grid-cols-4 gap-y-6">
         {concerts &&
           concerts.map((concert) => (
@@ -72,18 +65,21 @@ export default function SettingConcert() {
                 </Title>
                 <Divider style={{ marginTop: "8px", marginBottom: "0px" }} />
                 {/* Apply margin: 0 to remove margin */}
-                <p style={{ marginTop: "4px" }}>{concert.description}</p> {/* Apply margin: 0 to remove margin */}
+                <p style={{ marginTop: "4px" }} className="line-clamp-4">
+                  {concert.description}
+                </p>{" "}
+                {/* Apply margin: 0 to remove margin */}
                 <Divider style={{ marginTop: "8px", marginBottom: "0px" }} />
                 <p style={{ marginTop: "4px" }}>
                   Start at: {moment(concert.start_date, "DD-MM-YYYY").format("DD MMMM YYYY")} {concert.start_hours}
                 </p>
-                {concert.is_start ? (
-                  <Button type="primary" onClick={() => onClickStopConcert(concert)} danger style={{ marginTop: "16px" }}>
-                    Stop Concert
+                {concert.payments[0].review == null || concert.payments[0].rating == null ? (
+                  <Button type="primary" style={{ marginTop: "16px" }} onClick={() => showModal(concert.payments[0].id)}>
+                    Rate This!
                   </Button>
                 ) : (
-                  <Button type="primary" onClick={() => showModal(concert)} style={{ marginTop: "16px" }}>
-                    Start Concert
+                  <Button type="primary" style={{ marginTop: "16px" }} disabled>
+                    Thankyou For Rating
                   </Button>
                 )}
                 {/* Add margin-top to create space between button and description */}
@@ -91,9 +87,16 @@ export default function SettingConcert() {
             </Card>
           ))}
       </div>
-      <Modal title="Setting Concert " visible={visible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} layout="vertical">
-          <Form.Item label="Embed Youtube" name="link_yt" rules={[{ required: true, message: "Please input the description!" }]}>
+          <div className="text-center flex flex-col">
+            <div>Thankyou for watching this concert, give rating for this concert</div>
+
+            <div className="mt-4">
+              <Rate className="mt-8" style={{ fontSize: "40px" }} onChange={onChangeRating} />
+            </div>
+          </div>
+          <Form.Item label="Review" name="review">
             <TextArea rows={4} />
           </Form.Item>
         </Form>
