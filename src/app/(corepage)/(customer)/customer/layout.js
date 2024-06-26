@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Button, ConfigProvider, Layout, Menu, theme } from "antd";
+import { Avatar, Breadcrumb, Button, ConfigProvider, Dropdown, Layout, Menu, theme } from "antd";
 import Link from "next/link";
-import { HomeOutlined, BarChartOutlined, LogoutOutlined } from "@ant-design/icons";
+import { HomeOutlined, BarChartOutlined, LogoutOutlined, EditOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 const { Header, Content, Footer, Sider } = Layout;
 import { usePathname, useRouter } from "next/navigation";
@@ -47,6 +47,20 @@ const App = ({ children }) => {
     backgroundColor: "#9F59FF", // Custom background color for active item
     color: "white",
   };
+
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="edit-profile" icon={<EditOutlined />}>
+        <Link href="/customer/edit-profile">Edit Profile</Link>
+      </Menu.Item>
+      <Menu.Item key="edit-password" icon={<EditOutlined />}>
+        <Link href="/customer/edit-password">Edit Password</Link>
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Layout
@@ -127,11 +141,11 @@ const App = ({ children }) => {
           }}
         >
           <Title level={5} className="p-5">
-            Conve APPS
+            {"HI " + JSON.parse(localStorage.getItem("user")).user.name + " !"}
           </Title>
-          <Button type="primary" danger onClick={handleLogout}>
-            Logout
-          </Button>
+          <Dropdown overlay={userMenu} trigger={["click"]}>
+            <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />
+          </Dropdown>
         </Header>
         <Content className="my-4 mx-4">
           <div
