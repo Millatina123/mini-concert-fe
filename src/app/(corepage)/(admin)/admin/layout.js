@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Button, ConfigProvider, Layout, Menu, theme } from "antd";
+import { Avatar, Breadcrumb, Button, ConfigProvider, Layout, Menu, Dropdown, theme } from "antd";
 import Link from "next/link";
-import { HomeOutlined, BarChartOutlined, LogoutOutlined } from "@ant-design/icons";
+import { HomeOutlined, BarChartOutlined, LogoutOutlined, EditOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 const { Header, Content, Footer, Sider } = Layout;
 import { usePathname, useRouter } from "next/navigation";
@@ -26,45 +26,54 @@ const AdminLayout = ({ children }) => {
 
   const handleLogout = () => {
     // Perform logout logic here
-    // For example, clear the authentication token from local storage
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     Cookies.remove("authToken");
     Cookies.remove("user");
     resetApiState();
-    // Redirect the user to the login page
     router.push("/sign-in");
+  };
+
+  const handleEditProfile = () => {
+    router.push("/edit-profile");
   };
 
   // Custom style for Sider background
   const siderStyle = {
-    backgroundColor: "#B77BFF", // Custom background color
+    backgroundColor: "#eee0ff", // Custom background color
     bodyBgColor: colorBgContainer,
   };
 
   // Custom style for the active menu item
   const activeItemStyle = {
     backgroundColor: "#9F59FF", // Custom background color for active item
+    color: "white",
   };
 
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="edit-profile" icon={<EditOutlined />}>
+        <Link href="/admin/edit-profile">Edit Profile</Link>
+      </Menu.Item>
+      <Menu.Item key="edit-password" icon={<EditOutlined />}>
+        <Link href="/admin/edit-password">Edit Password</Link>
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <ConfigProvider
-        theme={{
-          token: {},
-        }}
-      >
+    <Layout style={{ minHeight: "100vh" }}>
+      <ConfigProvider theme={{ token: {} }}>
         <Sider collapsible theme="light" collapsed={collapsed} width={300} onCollapse={(value) => setCollapsed(value)} style={siderStyle} className="py-4 px-2">
           <div className="demo-logo-vertical" style={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
             <img src={"/logo_conve.PNG"} alt="Logo" className="w-1/4 h-auto ms-4" /> {/* Logo */}
           </div>
           <Menu
             theme="light"
-            style={{ backgroundColor: "#B77BFF" }}
+            style={{ backgroundColor: "#eee0ff" }}
             className="font-medium"
             mode="inline"
             onClick={onSelectMenu}
@@ -81,7 +90,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("admin") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("admin") ? activeItemStyle : {}) }}
             >
               <Link href="/admin">Dashboard</Link>
             </Menu.Item>
@@ -96,7 +105,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("admin-concert") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("admin-concert") ? activeItemStyle : {}) }}
             >
               <Link href="/admin/concert">Concert</Link>
             </Menu.Item>
@@ -111,7 +120,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("admin-payments") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("admin-payments") ? activeItemStyle : {}) }}
             >
               <Link href="/admin/payments">Payments</Link>
             </Menu.Item>
@@ -126,7 +135,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("setting-concert") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("setting-concert") ? activeItemStyle : {}) }}
             >
               <Link href="/admin/setting-concert">Setting Concert</Link>
             </Menu.Item>
@@ -141,7 +150,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("history-concert") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("history-concert") ? activeItemStyle : {}) }}
             >
               <Link href="/admin/history-concert">History Concert</Link>
             </Menu.Item>
@@ -156,7 +165,7 @@ const AdminLayout = ({ children }) => {
                   }}
                 />
               }
-              style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("history-payment") ? activeItemStyle : {}) }}
+              style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("history-payment") ? activeItemStyle : {}) }}
             >
               <Link href="/admin/history-payment">History Payment</Link>
             </Menu.Item>
@@ -172,15 +181,14 @@ const AdminLayout = ({ children }) => {
             display: "flex",
             justifyContent: "space-between", // Align items horizontally with space between them
             alignItems: "center",
-            // Align items vertically in the center
           }}
         >
           <Title level={5} className="p-5">
-            Conve APPS
+            {"HI " + JSON.parse(localStorage.getItem("user")).user.name + " !"}
           </Title>
-          <Button type="primary" danger onClick={handleLogout}>
-            Logout
-          </Button>
+          <Dropdown overlay={userMenu} trigger={["click"]}>
+            <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />
+          </Dropdown>
         </Header>
         <Content className="my-4 mx-4">
           <div

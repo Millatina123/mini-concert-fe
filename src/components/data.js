@@ -1,34 +1,27 @@
-import {
-  FaceSmileIcon,
-  ChartBarSquareIcon,
-  CursorArrowRaysIcon,
-  DevicePhoneMobileIcon,
-  AdjustmentsHorizontalIcon,
-  SunIcon,
-} from "@heroicons/react/24/solid";
-
+import { FaceSmileIcon, ChartBarSquareIcon, CursorArrowRaysIcon, DevicePhoneMobileIcon, AdjustmentsHorizontalIcon, SunIcon } from "@heroicons/react/24/solid";
+import { DoubleRightOutlined } from "@ant-design/icons";
 import benefitOneImg from "../../public/img/benefit-one.png";
 import benefitTwoImg from "../../public/img/benefit-two.png";
 
 const benefitOne = {
-  title: "Highlight your benefits",
-  desc: "You can use this space to highlight your first benefit or a feature of your product. It can also contain an image or Illustration like in the example along with some bullet points.",
+  title: "Benefits using CONVE",
+  desc: "",
   image: benefitOneImg,
   bullets: [
     {
-      title: "Understand your customers",
-      desc: "Then explain the first point breifly in one or two lines.",
-      icon: <FaceSmileIcon />,
+      title: "Access to Exclusive Concerts",
+      desc: "Enjoy live performances from your favorite artists, available exclusively on CONVE.",
+      icon: <DoubleRightOutlined style={{ color: "white" }} />,
     },
     {
-      title: "Improve acquisition",
-      desc: "Here you can add the next benefit point.",
-      icon: <ChartBarSquareIcon />,
+      title: "Convenience and Comfort:",
+      desc: "Attend concerts from the comfort of your home. No need to worry about travel, parking, or crowds.",
+      icon: <DoubleRightOutlined color="white" style={{ color: "white" }} />,
     },
     {
-      title: "Drive customer retention",
-      desc: "This will be your last bullet point in this section.",
-      icon: <CursorArrowRaysIcon />,
+      title: "Diverse Music Genres",
+      desc: "Whether you're into pop, rock, jazz, classical, or indie, CONVE has concerts to suit every taste.",
+      icon: <DoubleRightOutlined color="white" style={{ color: "white" }} />,
     },
   ],
 };
@@ -56,5 +49,4 @@ const benefitTwo = {
   ],
 };
 
-
-export {benefitOne, benefitTwo};
+export { benefitOne, benefitTwo };

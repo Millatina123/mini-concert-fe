@@ -37,7 +37,6 @@ export default function SettingConcert() {
 
   const onClickStopConcert = async (concert) => {
     try {
-      const values = await form.validateFields();
       var data = {
         id: concert.id,
       };

@@ -38,13 +38,14 @@ const App = ({ children }) => {
 
   // Custom style for Sider background
   const siderStyle = {
-    backgroundColor: "#B77BFF", // Custom background color
+    backgroundColor: "#eee0ff ", // Custom background color
     bodyBgColor: colorBgContainer,
   };
 
   // Custom style for the active menu item
   const activeItemStyle = {
     backgroundColor: "#9F59FF", // Custom background color for active item
+    color: "white",
   };
 
   return (
@@ -55,11 +56,11 @@ const App = ({ children }) => {
     >
       <Sider theme="light" collapsed={collapsed} width={300} onCollapse={(value) => setCollapsed(value)} style={siderStyle} className="py-4 px-2">
         <div className="demo-logo-vertical" style={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-          <img src={"/logo_conve.PNG"} alt="Logo" className="w-1/2 h-auto " /> {/* Logo */}
+          <img src={"/logo_conve.PNG"} alt="Logo" className="w-1/4 h-auto ms-4" /> {/* Logo */}
         </div>
         <Menu
           theme="light"
-          style={{ backgroundColor: "#B77BFF" }}
+          style={{ backgroundColor: "#eee0ff" }}
           className="font-medium"
           mode="inline"
           onClick={onSelectMenu}
@@ -76,7 +77,7 @@ const App = ({ children }) => {
                 }}
               />
             }
-            style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("customer") ? activeItemStyle : {}) }}
+            style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("customer") ? activeItemStyle : {}) }}
           >
             <Link href="/customer">Dashboard</Link>
           </Menu.Item>
@@ -91,7 +92,7 @@ const App = ({ children }) => {
                 }}
               />
             }
-            style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("my-ticket") ? activeItemStyle : {}) }}
+            style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("my-ticket") ? activeItemStyle : {}) }}
           >
             <Link href="/customer/my-ticket">My Ticket</Link>
           </Menu.Item>
@@ -106,7 +107,7 @@ const App = ({ children }) => {
                 }}
               />
             }
-            style={{ color: "white", fontSize: "16", ...(selectedKeys.includes("history-concert") ? activeItemStyle : {}) }}
+            style={{ color: "gray", fontSize: "16", ...(selectedKeys.includes("history-concert") ? activeItemStyle : {}) }}
           >
             <Link href="/customer/history">History Concert</Link>
           </Menu.Item>

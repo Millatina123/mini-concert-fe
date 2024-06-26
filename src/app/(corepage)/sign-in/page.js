@@ -39,7 +39,7 @@ const SignIn = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <img src={"/logo_conve.PNG"} alt="Logo" className="w-32 h-auto mb-8" /> {/* Logo */}
       <Card className="w-full max-w-md p-4 ">
-        <Title level={3}>Welcome in mini concert!</Title>
+        <Title level={3}>Welcome in CONVE</Title>
         <Paragraph>Sign in to continue</Paragraph>
         <Form
           name="basic"

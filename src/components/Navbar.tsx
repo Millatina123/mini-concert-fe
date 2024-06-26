@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   return (
     <div className="bg-white shadow-lg z-40">
-      <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
+      <nav className="container relative flex flex-wrap items-center justify-between px-8 py-2 mx-auto lg:justify-between xl:px-0">
         {/* Logo  */}
         <Disclosure>
           {({ open }) => (
@@ -17,9 +17,8 @@ export const Navbar = () => {
                 <Link href="/">
                   <span className="flex items-center space-x-2 text-2xl font-medium text-black">
                     <span>
-                      <Image src="/img/logo.svg" alt="N" width="32" height="32" className="w-8" />
+                      <Image src="/logo_conve.PNG" alt="N" width="1000" height="1000" className="w-16" />
                     </span>
-                    <span>Conve</span>
                   </span>
                 </Link>
 

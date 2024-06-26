@@ -17,17 +17,11 @@ export default function Home() {
   return (
     <Container className="bg-white px-4 mt-4">
       <Hero />
-      <SectionTitle preTitle="Nextly Benefits" title=" Why should you use this landing page">
-        Nextly is a free landing page & marketing website template for startups and indie projects. Its built with Next.js & TailwindCSS. And its completely open-source.
+      <SectionTitle preTitle="What is CONVE" title=" Why you must try CONVE">
+        Why Try CONVE? Enjoy exclusive online concerts, diverse music genres, high-quality streaming, interactive features, global access, and the comfort of home. Experience music redefined.
       </SectionTitle>
 
       <Benefits data={benefitOne} />
-
-      <SectionTitle preTitle="Watch a video" title="Learn how to fullfil your needs">
-        This section is to highlight a promo or demo video of your product. Analysts says a landing page with video has 3% more conversion rate. So, don&apos;t forget to add one. Just like this.
-      </SectionTitle>
-
-      <Video videoId="fZ0D0cnR88E" />
 
       <SectionTitle preTitle="Testimonials" title="Here's what our customers said">
         Testimonials is a great way to increase the brand trust and awareness. Use this section to highlight your popular customers.
@@ -35,11 +29,6 @@ export default function Home() {
 
       <Testimonials />
 
-      <SectionTitle preTitle="FAQ" title="Frequently Asked Questions">
-        Answer your customers possible questions here, it will increase the conversion rate as well as support or chat requests.
-      </SectionTitle>
-
-      <Faq />
       <Cta />
     </Container>
   );
