@@ -68,7 +68,7 @@ const PaymentForm = ({ form, data }) => {
               <input type="hidden" />
             </Form.Item>
             <Form.Item label="Evidence" name="evidence" rules={[{ required: true, message: "Please upload the Evidence!" }]}>
-              <Dragger name="evidence" action={process.env.NEXT_PUBLIC_BASE_API_URL + "user/payment/upload"} multiple={false} onChange={handleLogoChange} accept=".jpg,.jpeg,.png">
+              <Dragger name="evidence" action={process.env.NEXT_PUBLIC_BASE_API_URL + "/user/payment/upload"} multiple={false} onChange={handleLogoChange} accept=".jpg,.jpeg,.png">
                 <p className="ant-upload-drag-icon">{/* Upload icon */}</p>
                 <p className="ant-upload-text">Click or drag file to this area to upload</p>
                 <p className="ant-upload-hint">Insert Evidence of transfer</p>
