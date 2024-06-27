@@ -8,16 +8,18 @@ const { Title } = Typography;
 const UpdatePassword = () => {
   const [form] = Form.useForm();
   const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
-  const [localStorage_user,setLocaStorageUser] = useState();
+  const [localStorageUser, setLocalStorageUser] = useState(null);
   useEffect(() => {
-    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
-  }, [])
-  
+    const user = localStorage.getItem("user");
+    if (user) {
+      setLocalStorageUser(JSON.parse(user));
+    }
+  }, []);
 
   const onFinish = async (values) => {
     try {
       const { password } = values;
-      const userId = JSON.parse(localStorage_user.user.id);
+      const userId = localStorageUser.user.id;
 
       const data = {
         id: userId,

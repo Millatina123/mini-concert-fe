@@ -8,10 +8,13 @@ const { Title } = Typography;
 const EditProfile = () => {
   const [form] = Form.useForm();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
-  const [localStorage_user,setLocaStorageUser] = useState();
+  const [localStorageUser, setLocalStorageUser] = useState(null);
   useEffect(() => {
-    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
-  }, [])
+    const user = localStorage.getItem("user");
+    if (user) {
+      setLocalStorageUser(JSON.parse(user));
+    }
+  }, []);
   const onFinish = async (values) => {
     try {
       const { email, name, phone } = values;
@@ -48,9 +51,9 @@ const EditProfile = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          email: JSON.parse(localStorage_user).user.email, // Initial email value
-          name: JSON.parse(localStorage_user).user.name, // Initial name value
-          phone: JSON.parse(localStorage_user).user.phone_number, // Initial phone number value
+          email: localStorageUser?.user.email, // Initial email value
+          name: localStorageUser?.user.name, // Initial name value
+          phone: localStorageUser?.user.phone_number, // Initial phone number value
         }}
       >
         <Form.Item
