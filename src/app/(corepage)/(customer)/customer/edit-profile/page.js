@@ -9,18 +9,20 @@ const EditProfile = () => {
   const [form] = Form.useForm();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [localStorageUser, setLocalStorageUser] = useState(null);
+
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
       setLocalStorageUser(JSON.parse(user));
     }
   }, []);
+
   const onFinish = async (values) => {
     try {
       const { email, name, phone } = values;
 
-      var data = {
-        id: JSON.parse(localStorage.getItem("user")).user.id,
+      const data = {
+        id: JSON.parse(window.localStorage.getItem("user")).user.id,
         email: email,
         name: name,
         phone_number: phone,
@@ -28,10 +30,8 @@ const EditProfile = () => {
 
       const response = await updateUser(data).unwrap();
       const response_fix = response.payload.data.user;
-      localStorage.setItem("user", JSON.stringify({ user: response_fix }));
+      window.localStorage.setItem("user", JSON.stringify({ user: response_fix }));
 
-      // Update localStorage with new user data
-      //   localStorage.setItem("user", JSON.stringify({ user: response.user }));
       message.success("Profile updated successfully");
     } catch (error) {
       message.error("Failed to update profile");
@@ -42,6 +42,10 @@ const EditProfile = () => {
     form.resetFields();
   };
 
+  if (!localStorageUser) {
+    return <p>Loading...</p>; // Show a loading message or spinner while the user data is being loaded
+  }
+
   return (
     <>
       <Title level={3}>Edit Profile</Title>
@@ -51,9 +55,9 @@ const EditProfile = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          email: localStorageUser?.user.email, // Initial email value
-          name: localStorageUser?.user.name, // Initial name value
-          phone: localStorageUser?.user.phone_number, // Initial phone number value
+          email: localStorageUser.user.email, // Initial email value
+          name: localStorageUser.user.name, // Initial name value
+          phone: localStorageUser.user.phone_number, // Initial phone number value
         }}
       >
         <Form.Item

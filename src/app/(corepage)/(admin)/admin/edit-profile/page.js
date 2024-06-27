@@ -9,6 +9,7 @@ const EditProfile = () => {
   const [form] = Form.useForm();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [localStorageUser, setLocalStorageUser] = useState(null);
+
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -20,7 +21,7 @@ const EditProfile = () => {
     try {
       const { email, name, phone } = values;
 
-      var data = {
+      const data = {
         id: JSON.parse(window.localStorage.getItem("user")).user.id,
         email: email,
         name: name,
@@ -31,8 +32,6 @@ const EditProfile = () => {
       const response_fix = response.payload.data.user;
       window.localStorage.setItem("user", JSON.stringify({ user: response_fix }));
 
-      // Update localStorage with new user data
-      //   localStorage.setItem("user", JSON.stringify({ user: response.user }));
       message.success("Profile updated successfully");
     } catch (error) {
       message.error("Failed to update profile");
@@ -43,9 +42,12 @@ const EditProfile = () => {
     form.resetFields();
   };
 
+  if (!localStorageUser) {
+    return <p>Loading...</p>; // Show a loading message or spinner while the user data is being loaded
+  }
+
   return (
     <>
-    
       <Title level={3}>Edit Profile</Title>
       <p className="text-black mb-3">Update your profile information below.</p>
       <Form
@@ -53,9 +55,9 @@ const EditProfile = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          email: localStorageUser?.user.email, // Initial email value
-          name: localStorageUser?.user.name, // Initial name value
-          phone: localStorageUser?.user.phone_number, // Initial phone number value
+          email: localStorageUser.user.email, // Initial email value
+          name: localStorageUser.user.name, // Initial name value
+          phone: localStorageUser.user.phone_number, // Initial phone number value
         }}
       >
         <Form.Item
