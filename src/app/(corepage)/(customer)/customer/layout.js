@@ -23,12 +23,13 @@ const App = ({ children }) => {
     console.log(e);
     setSelectedKeys([e.key]); // Update the selected key
   };
-
-  const [localStorage_user,setLocaStorageUser] = useState();
+  const [localStorageUser, setLocalStorageUser] = useState(null);
   useEffect(() => {
-    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
-  }, [])
-
+    const user = localStorage.getItem("user");
+    if (user) {
+      setLocalStorageUser(JSON.parse(user));
+    }
+  }, []);
 
   const handleLogout = () => {
     // Perform logout logic here
@@ -146,8 +147,8 @@ const App = ({ children }) => {
             // Align items vertically in the center
           }}
         >
-          <Title level={5} className="p-5">
-            {"HI " + JSON.parse(localStorage_user).user.name + " !"}
+         <Title level={5} className="p-5">
+            {localStorageUser ? "HI " + localStorageUser.user.name + " !" : "HI!"}
           </Title>
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />

@@ -19,10 +19,17 @@ const AdminLayout = ({ children }) => {
 
   const router = useRouter();
 
-  const [localStorage_user,setLocaStorageUser] = useState();
+  const [localStorageUser, setLocalStorageUser] = useState(null);
   useEffect(() => {
-    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
-  }, [])
+    const user = localStorage.getItem("user");
+    if (user) {
+      setLocalStorageUser(JSON.parse(user));
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(localStorageUser); // This will log the updated state value
+  }, [localStorageUser]);
 
   const onSelectMenu = (e) => {
     console.log(e);
@@ -189,7 +196,7 @@ const AdminLayout = ({ children }) => {
           }}
         >
           <Title level={5} className="p-5">
-            {"HI " + JSON.parse(localStorage_user.user.name) + " !"}
+            {localStorageUser ? "HI " + localStorageUser.user.name + " !" : "HI!"}
           </Title>
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />
@@ -218,4 +225,5 @@ const AdminLayout = ({ children }) => {
     </Layout>
   );
 };
+
 export default AdminLayout;
