@@ -29,7 +29,7 @@ const ConcertForm = ({ form }) => {
         <TextArea rows={4} />
       </Form.Item>
       <Form.Item label="Logo" name="logo" rules={[{ required: true, message: "Please upload the logo!" }]}>
-        <Dragger name="logo" action="http://localhost:3001/api/concerts/upload" onChange={handleLogoChange} accept=".jpg,.jpeg,.png">
+        <Dragger name="logo" action={process.env.NEXT_PUBLIC_BASE_API_URL+"/concerts/upload"} onChange={handleLogoChange} accept=".jpg,.jpeg,.png">
           <p className="ant-upload-drag-icon">{/* Upload icon */}</p>
           <p className="ant-upload-text">Click or drag file to this area to upload</p>
           <p className="ant-upload-hint">Support for a single or bulk upload.</p>
