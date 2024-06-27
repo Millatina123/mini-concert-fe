@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Typography, message } from "antd";
 import { useUpdateUserMutation } from "@/redux/services/auth";
 
@@ -8,7 +8,10 @@ const { Title } = Typography;
 const EditProfile = () => {
   const [form] = Form.useForm();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
-
+  const [localStorage_user,setLocaStorageUser] = useState();
+  useEffect(() => {
+    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
+  }, [])
   const onFinish = async (values) => {
     try {
       const { email, name, phone } = values;
@@ -45,9 +48,9 @@ const EditProfile = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          email: JSON.parse(localStorage.getItem("user")).user.email, // Initial email value
-          name: JSON.parse(localStorage.getItem("user")).user.name, // Initial name value
-          phone: JSON.parse(localStorage.getItem("user")).user.phone_number, // Initial phone number value
+          email: JSON.parse(localStorage_user).user.email, // Initial email value
+          name: JSON.parse(localStorage_user).user.name, // Initial name value
+          phone: JSON.parse(localStorage_user).user.phone_number, // Initial phone number value
         }}
       >
         <Form.Item

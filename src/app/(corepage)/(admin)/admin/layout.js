@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, ConfigProvider, Layout, Menu, Dropdown, theme } from "antd";
 import Link from "next/link";
@@ -18,6 +18,11 @@ const AdminLayout = ({ children }) => {
   } = theme.useToken();
 
   const router = useRouter();
+
+  const [localStorage_user,setLocaStorageUser] = useState();
+  useEffect(() => {
+    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
+  }, [])
 
   const onSelectMenu = (e) => {
     console.log(e);
@@ -184,7 +189,7 @@ const AdminLayout = ({ children }) => {
           }}
         >
           <Title level={5} className="p-5">
-            {"HI " + JSON.parse(localStorage.getItem("user")).user.name + " !"}
+            {"HI " + JSON.parse(localStorage_user.user.name) + " !"}
           </Title>
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />

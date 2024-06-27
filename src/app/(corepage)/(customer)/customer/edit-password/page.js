@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Typography, message } from "antd";
 import { useUpdatePasswordMutation } from "@/redux/services/auth";
 
@@ -8,11 +8,14 @@ const { Title } = Typography;
 const UpdatePassword = () => {
   const [form] = Form.useForm();
   const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
-
+  const [localStorage_user,setLocaStorageUser] = useState();
+  useEffect(() => {
+    setLocaStorageUser(JSON.parse(window.localStorage.getItem("user")))
+  }, [])
   const onFinish = async (values) => {
     try {
       const { password } = values;
-      const userId = JSON.parse(localStorage.getItem("user")).user.id;
+      const userId = JSON.parse(localStorage_user.user.id);
 
       const data = {
         id: userId,
@@ -21,7 +24,7 @@ const UpdatePassword = () => {
 
       const response = await updatePassword(data).unwrap();
       const updatedUser = response.payload.data.user;
-      localStorage.setItem("user", JSON.stringify({ user: updatedUser }));
+      window.localStorage.setItem("user", JSON.stringify({ user: updatedUser }));
 
       message.success("Password updated successfully");
     } catch (error) {
